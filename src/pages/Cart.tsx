@@ -129,7 +129,7 @@ const Cart = () => {
                 </div>
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-bold">
-                    <span>Total</span>
+                    <span>Total(excluding taxes)</span>
                     <span className="text-primary">
                       {currency === 'INR' ? `₹${getTotal().toFixed(2)}` : currency === 'USD' ? `$${getTotal().toFixed(2)}` : `€${getTotal().toFixed(2)}`}
                     </span>
