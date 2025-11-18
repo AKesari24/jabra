@@ -317,20 +317,44 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={() => {
-                      const inr = parseFloat(newProduct.price_inr) || 0;
-                      setNewProduct({
-                        ...newProduct,
-                        price_usd: (inr / 83).toFixed(2),
-                        price_eur: (inr / 90).toFixed(2)
-                      });
-                    }}
-                  >
-                    Convert INR to USD & EUR
-                  </Button>
+                  <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    const inr = parseFloat(newProduct.price_inr);
+                    const usd = parseFloat(newProduct.price_usd);
+                    const eur = parseFloat(newProduct.price_eur);
+
+                    let finalInr = newProduct.price_inr;
+                    let finalUsd = newProduct.price_usd;
+                    let finalEur = newProduct.price_eur;
+
+                    const INR_PER_USD = 83;
+                    const INR_PER_EUR = 90;
+
+                    if (!isNaN(inr) && inr > 0) {
+                      finalUsd = String((inr / INR_PER_USD).toFixed(2));
+                      finalEur = String((inr / INR_PER_EUR).toFixed(2));
+                    } 
+                    else if (!isNaN(usd) && usd > 0) {
+                      finalInr = String((usd * INR_PER_USD).toFixed(2));
+                      finalEur = String(((usd * INR_PER_USD) / INR_PER_EUR).toFixed(2));
+                    } 
+                    else if (!isNaN(eur) && eur > 0) {
+                      finalInr = String((eur * INR_PER_EUR).toFixed(2));
+                      finalUsd = String(((eur * INR_PER_EUR) / INR_PER_USD).toFixed(2));
+                    }
+
+                    setNewProduct({
+                      ...newProduct,
+                      price_inr: finalInr,
+                      price_usd: finalUsd,
+                      price_eur: finalEur,
+                    });
+                  }}
+                >
+                  Convert
+                </Button>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
